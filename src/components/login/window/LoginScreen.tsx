@@ -240,7 +240,29 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({
                     steps={stepMarks(scene, inBrowser)}
                 />
             )}
-            below={details ? <Unfold open={detailsOpen}>{details}</Unfold> : undefined}
+            below={
+                details || providerId === 'kugou' ? (
+                    <>
+                        {details && <Unfold open={detailsOpen}>{details}</Unfold>}
+                        {providerId === 'kugou' && (
+                            <div className="mt-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-[12px] leading-5 text-[color:var(--st-t2)]">
+                                <strong className="text-[color:var(--st-t1)]">💡 Hi-Res 播放失败？</strong>
+                                <br />
+                                遇到“格式错误”时，请先访问{' '}
+                                <a
+                                    href="https://fs.youthandroid2.kugou.com/"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[color:var(--st-accent)] underline"
+                                >
+                                    fs.youthandroid2.kugou.com
+                                </a>
+                                {' '}信任证书后返回重试。此操作有一定概率可缓解。
+                            </div>
+                        )}
+                    </>
+                ) : undefined
+            }
         />
         {shownDone && providerId && <LoginDoneFlight parts={doneParts} providerId={providerId} label={label} user={summary?.user ?? null} />}
         </>
